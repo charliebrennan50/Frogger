@@ -1,0 +1,23 @@
+html, body {
+  margin: 20;
+  padding: 20;
+}
+canvas {
+  display: block;
+}
+
+.startButton {
+  border-radius: 10px;
+  background-color: darkgreen;
+  font-size: large;
+  color: white;
+  /* display: grid; */
+  padding: 10px;
+}
+
+.button-container-div {
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

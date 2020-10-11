@@ -6,11 +6,26 @@ class Turtle {
         this.w = W;
         this.h = H;
         this.speed = S * grid / 50;
+        this.tAlpha = 255;
+        this.Timer = int(random(100));
+        this.submerged = false;
     }
 
     show() {
+        this.Timer++; // adjust turtle diving and surfacing with timer
+        if (this.Timer>660) { 
+              this.tAlpha=255;
+              this.Timer=int(random(100));
+              this.submerged=false;}   //resurfaces
+        else if (this.Timer>540){ 
+              this.tAlpha=0;
+              this.submerged=true;} // completely submerged 
+        else if (this.Timer>360){
+              this.tAlpha=75;} // goes deeper
+        else if (this.Timer>180){
+              this.tAlpha=150;} // starts dive
         noStroke();
-        fill(5, 35, 120, 255);
+        fill(5, 35, 120, this.tAlpha);
         ellipseMode(CORNER);
         ellipse(this.left + 5 * factor, this.bottom + 5 * factor, this.w - 10 * factor, this.h - 10 * factor);
     }
@@ -23,31 +38,4 @@ class Turtle {
             this.left = width;
         }
     }
-
-    //need to add an internal loop here to
-    //control individual turtles so they
-    //submerge individually
-    //   void displayturtles(){
-    //     turtleTimer++;
-    //     if (turtleTimer>660) {
-    //           turtleAlpha=255;
-    //           turtleTimer=int(random(100));
-    //           submerged=false;}
-    //     else if (turtleTimer>540){
-    //           turtleAlpha=0;
-    //           submerged=true;}
-    //     else if (turtleTimer>360){
-    //           turtleAlpha=75;}
-    //     else if (turtleTimer>180){
-    //           turtleAlpha=150;}
-    //     //maybe just move the turtleTimer routine in here
-    //     //to control individual turtles
-    //     for (Turtle t: turtles){
-    //          t.move();
-    //          t.show(turtleAlpha);
-    //          if (frog.intersect(t) && !submerged){
-    //            frog.attach(t);}
-    //     }
-    //   }
-    //
 }

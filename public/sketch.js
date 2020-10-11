@@ -117,7 +117,7 @@ function mousePressed() {
 // the audio also won't start until the user interacts with the page
 
 function start() {
-  //if not started, start, else restart
+  //if not started, start
   started = true;
   loop();
 }

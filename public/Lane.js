@@ -14,9 +14,7 @@ class Lane {
     this.lilypads = [];
     this.turtles = [];
     this.onLilyPad = false;
-    this.turtleAlpha = 255;
-    this.turtleTimer = int(random(100));
-    this.submerged = false;
+
     if (this.type == 1) {
       //cars
       for (let i = 0; i < this.num; i++) {
@@ -51,9 +49,7 @@ class Lane {
     for (let log of this.logs) {
       log.move();
       log.show();
-      if (frog.intersect(log)) {
-        frog.attach(log);
-      }
+      frog.intersect(log) && frog.attach(log);
     }
   }
 
@@ -62,7 +58,7 @@ class Lane {
       t.move();
       t.show();
       if (frog.intersect(t)) {
-        frog.attach(t);
+        t.submerged ? frog.isAttached = false : frog.attach(t);
       }
     }
   }

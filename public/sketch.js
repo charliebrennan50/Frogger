@@ -1,7 +1,7 @@
-let grid = 30;
+let grid = 50;
 let factor = grid / 50;
 let nScore = 0;
-let nSafe = 4;
+let nSafe = 0;
 let level = 1;
 let nLives = 5;
 let frogpng;
@@ -11,14 +11,6 @@ let lanes = [];
 let lilypads = [];
 let safe, hop, squash, plunk, theme;
 let started;
-//var context = new AudioContext();
-
-// One-liner to resume playback when user interacted with the page.
-// document.querySelector('button').addEventListener('click', function() {
-//   context.resume().then(() => {
-//     console.log('Playback resumed successfully');
-//   });
-// });
 
 function preload() {
   frogpng = loadImage('data/frogpic3.png');
@@ -37,17 +29,19 @@ function setup() {
 
   theme.play();
 
-  createCanvas(grid * 16, grid * 18);
+  //createCanvas(grid * 16, grid * 18);
+  let renderer = createCanvas(grid * 16, grid * 14);
+  renderer.parent("game-canvas");
 
   frog = new Frog(grid * 7, height - grid, grid, grid);
 
   // Lane(lane left, lane bottom, item width, type, speed, number, spacing)
   // Lanes 0-4 are cars
-  lanes[0] = new Lane(0, height - 2 * grid, grid, 1, 1, 1, 6 * grid);
-  lanes[1] = new Lane(0, height - 3 * grid, grid, 1, -1, 1, 5 * grid);
-  lanes[2] = new Lane(0, height - 4 * grid, grid, 1, 1, 1, 5 * grid);
-  lanes[3] = new Lane(0, height - 5 * grid, grid, 1, -1, 1, 3 * grid);
-  lanes[4] = new Lane(0, height - 6 * grid, grid, 1, 1, 1, 3 * grid);
+  lanes[0] = new Lane(0, height - 2 * grid, grid, 1, 2, 2, 2 * grid);
+  lanes[1] = new Lane(0, height - 3 * grid, grid, 1, -1.2, 2, 5 * grid);
+  lanes[2] = new Lane(0, height - 4 * grid, grid, 1, 1.4, 2, 2 * grid);
+  lanes[3] = new Lane(0, height - 5 * grid, grid, 1, -1, 2, 1 * grid);
+  lanes[4] = new Lane(0, height - 6 * grid, grid, 1, 3, 2, 3 * grid);
 
   // Lanes 6-8 are logs
   lanes[6] = new Lane(0, height - 9 * grid, grid * 2, 2, -2, 2, 3 * grid);
@@ -69,35 +63,23 @@ function setup() {
   noStroke();
   rect(0, height - grid * 14, width, grid); // line above lilypad area
   rect(0, height - grid * 13, width, grid) //lilypad area
-  //create lilypad objects
+  
+  //create lilypad objects and display them
   for (let i = 0; i < 5; i++) {
     lilypads[i] = new LilyPad(factor * (40 + 160 * i));
+    lilypads[i].show();
   }
-  //display lilypads
-  for (let L of lilypads) {
-    L.show();
-  }
-
 }
 
 function draw() {
-  //game background
-  fill(0);
-  rect(0, 0, width, grid * 4);
 
-  //score
-  fill(0, 255, 0);
-  textSize(grid / 1.75);
-  text("Player One", grid, 30 * factor);
-  text("Score", grid, 1.5 * grid);
-  text(str(nScore), 3 * grid, 1.5 * grid);
-  text("Level", grid, 2.5 * grid);
-  text(str(level), 3 * grid, 2.5 * grid);
-  text("Lives", grid, 3.5 * grid);
-  //text(str(nLives), 3 * grid, 3.5 * grid);
-  for (let i = 1; i < nLives + 1; i++) {
-    image(frogpng, 3 * grid + grid * i, 3 * grid, grid, grid);
-  }
+  //display score and lives
+
+  document.getElementById("score").textContent = `Score: ${nScore} Level: ${level}`;
+
+  let frogImageString = '<img class = "live-image" src="/data/frogpic3.png"/>';
+  let livesDisplayString = nLives>0 ? frogImageString.repeat(nLives) : "Game Over!";
+  document.getElementById("lives").innerHTML = livesDisplayString;
 
   // //safe areas
   fill(0, 100, 0);
@@ -112,29 +94,19 @@ function draw() {
   fill(0);
   rect(0, height - grid * 6, width, grid * 5);
 
-  for (let i = 0; i < 5; i++) {
-    lanes[i].displaycars();
+  for (let lane of lanes) {
+    lane.displaycars();
+    lane.displaylogs();
+    lane.displayturtles();
   }
 
-  for (let i = 6; i < 9; i++) {
-    lanes[i].displaylogs();
-  }
-
-  lanes[5].displayturtles();
-  lanes[9].displayturtles();
-
-  frog.update();
-  frog.checkWet();
-  frog.show();
-  frog.checkPadsFull();
+  frog.update(); // move frog if attached to something
+  frog.checkWet(); // check to see if in water
+  frog.show(); // display the frog
+  frog.checkPadsFull(); // check to see if lilypads are full
 }
 
-
-// function touchStarted() {
-//   if (getAudioContext().state !== 'running') {
-//     getAudioContext().resume();
-//   }
-// }
+// The code below is needed to initiate the audio and start the game
 
 function mousePressed() {
   getAudioContext().resume()
@@ -143,7 +115,9 @@ function mousePressed() {
 // this function responds to the "start" button click on the game page
 // the frog can't move and hence the game can't start until the button is pushed
 // the audio also won't start until the user interacts with the page
+
 function start() {
+  //if not started, start, else restart
   started = true;
   loop();
 }

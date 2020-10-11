@@ -22,8 +22,4 @@ constructor(L, B, W, H, S){
     this.left=width;
     }
  }
-
-
-
-
 }

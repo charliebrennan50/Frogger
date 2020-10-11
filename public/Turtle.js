@@ -11,7 +11,6 @@ class Turtle {
     show() {
         noStroke();
         fill(5, 35, 120, 255);
-        // rect(this.left + 5 * factor, this.bottom + 5 * factor, this.w - 10 * factor, this.h - 10 * factor);
         ellipseMode(CORNER);
         ellipse(this.left + 5 * factor, this.bottom + 5 * factor, this.w - 10 * factor, this.h - 10 * factor);
     }

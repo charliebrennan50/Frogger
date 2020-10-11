@@ -2,11 +2,21 @@ html, body {
   margin: 20;
   padding: 20;
 }
+
 canvas {
-  display: block;
+  position: relative;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  margin-top: 20px;
 }
 
 .startButton {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* top: 50%;  */
   border-radius: 10px;
   background-color: darkgreen;
   font-size: large;
@@ -15,9 +25,43 @@ canvas {
   padding: 10px;
 }
 
-.button-container-div {
-  height: 100px;
+#score-container {
   display: flex;
   justify-content: center;
   align-items: center;
+  color: green;
+  font-size: 30px;
+}
+
+#score {
+  margin: 5px;
+}
+
+.button-container-div {
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-title {
+  font-size: 60px;
+  text-align: center;
+  color: green;
+}
+
+#game-canvas {
+  height: 720px;
+}
+
+.live-image {
+  height: 50px;
+  width: 50px;
+}
+
+#lives {
+  color: red;
+  height: 50px;
+  font-size: 50px;
+  text-align: center;
 }

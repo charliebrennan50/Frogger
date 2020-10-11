@@ -58,6 +58,7 @@ class Frog {
       }
     }
   }
+  
   attach(log) { // method to attach frog to log
     this.attached = log; // set attached log
     this.isAttached = true; // set attached flag
@@ -115,9 +116,7 @@ class Frog {
     if (!this.onLilyPad) {
       nLives = nLives - 1;
       plunk.play();
-      lives = lives - 1;
       ResetFrog();
-      //frog.move(0,1);
     }
     this.onLilyPad = false;
   }

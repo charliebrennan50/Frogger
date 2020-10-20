@@ -40,17 +40,12 @@ class Frog {
   }
 
   update() {
-    //if (this.attached != null) { // if frog attached to something
+    // check if frog attached to something
     if (this.isAttached) {
       frog.left += this.attached.speed; // set frog speed to attached speed
-      if (this.attached.speed > 0 && this.left > width + this.w) { // if frog goes off right side of screen 
-        //this.left = -this.w; // re-enter on left side of screen moving in same direction
-        this.isAttached = false;
-        nLives = nLives - 1;
-        plunk.play();
-        ResetFrog();
-      } else if (this.attached.speed < 0 && this.left < -this.w) { // if frog goes off left side
-        //this.left = width + this.w; // re-enter on right
+      // if frog goes off scree, you die
+      if ((this.attached.speed > 0 && this.left > width) ||
+        (this.attached.speed < 0 && this.left < -this.w)) {
         this.isAttached = false;
         nLives = nLives - 1;
         plunk.play();
@@ -58,7 +53,7 @@ class Frog {
       }
     }
   }
-  
+
   attach(log) { // method to attach frog to log
     this.attached = log; // set attached log
     this.isAttached = true; // set attached flag
@@ -89,6 +84,58 @@ class Frog {
       this.bottom >= log.bottom + log.h || this.bottom + this.h <= log.bottom);
   }
 
+  // checkLilyPad() {
+  //   //determine if frog is on a lilypad and if so which one
+  //   for (let L of lilypads) {
+  //     if (this.left > L.left && this.left + this.w < L.left + L.w) {
+  //       this.onLilyPad = true;
+  //       if (!L.occupied) {
+  //         image(safepng, L.left + 15 * factor, L.bottom + 5 * factor, grid * 0.9, grid * 0.9);
+  //         L.occupied = true;
+  //         nSafe = nSafe + 1;
+  //         //if nSafe=5 don't play safe sound so no overlap with theme song
+  //         //if nSafe<5 - do rest of loop else do stuff in checklilypadsfull
+  //         if (nSafe < 5) {
+  //           safe.play();
+  //         }
+  //         nScore = nScore + 200;
+  //         ResetFrog();
+  //         //need this because resetting frog changes frog.left for rest of loop
+  //         //and once the frog is on a lilypad, there's no need to check others
+  //         break;
+  //       } else if (L.occupied) {
+  //         this.move(0, 1);
+  //       }
+  //     }
+  //   }
+  //   // if not on a lilypad, you missed and are dead
+  //   if (!this.onLilyPad) {
+  //     nLives = nLives - 1;
+  //     plunk.play();
+  //     ResetFrog();
+  //   }
+  //   this.onLilyPad = false;
+  // }
+
+  // // every time frog lands on lilypad, check to see if all lilypads are full
+  // checkPadsFull() {
+  //   // if all lilypads full, play theme, empty lilypads, adjust score, 
+  //   // increase level
+  //   if (nSafe == 5) {
+  //     theme.play();
+  //     // delay clearing lilypads for seven seconds, until theme done playing
+  //     setTimeout(() => {
+  //       for (let L of lilypads) {
+  //         L.occupied = false;
+  //         L.show();
+  //       }
+  //     }, 7000);
+  //     nSafe = 0;
+  //     nScore = nScore + 500;
+  //     level = level + 1;
+  //   }
+  // }
+
   checkLilyPad() {
     //determine if frog is on a lilypad and if so which one
     for (let L of lilypads) {
@@ -97,14 +144,16 @@ class Frog {
         if (!L.occupied) {
           image(safepng, L.left + 15 * factor, L.bottom + 5 * factor, grid * 0.9, grid * 0.9);
           L.occupied = true;
-          nSafe = nSafe + 1;
+          nSafe = nSafe + 1;          
+          nScore = nScore + 200;
+          ResetFrog();
           //if nSafe=5 don't play safe sound so no overlap with theme song
+          //if nSafe<5 - do rest of loop else do stuff in checklilypadsfull
           if (nSafe < 5) {
             safe.play();
+          } else {
+            this.LilyPadsFull();
           }
-          nScore = nScore + 200;
-          //lifeScore = lifeScore + 200;
-          ResetFrog();
           //need this because resetting frog changes frog.left for rest of loop
           //and once the frog is on a lilypad, there's no need to check others
           break;
@@ -113,6 +162,7 @@ class Frog {
         }
       }
     }
+    // if not on a lilypad, you missed and are dead
     if (!this.onLilyPad) {
       nLives = nLives - 1;
       plunk.play();
@@ -121,11 +171,9 @@ class Frog {
     this.onLilyPad = false;
   }
 
-  // every time frog lands on lilypad, check to see if all lilypads are full
-  checkPadsFull() {
+    LilyPadsFull() {
     // if all lilypads full, play theme, empty lilypads, adjust score, 
     // increase level
-    if (nSafe == 5) {
       theme.play();
       // delay clearing lilypads for seven seconds, until theme done playing
       setTimeout(() => {
@@ -137,6 +185,5 @@ class Frog {
       nSafe = 0;
       nScore = nScore + 500;
       level = level + 1;
-    }
   }
 }

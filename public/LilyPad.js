@@ -13,19 +13,4 @@ class LilyPad {
         fill(116, 196, 245);
         rect(this.left, this.bottom, this.w, this.h);
     }
-
-    //
-    //   void resetpads(){
-    //     //nSafe=0;
-    //     nScore=nScore+500;
-    //     level++;
-    //     lifeScore=lifeScore+500;
-    //     println(theme.isPlaying());
-    //       nSafe=0; //<>//
-    //       for (int i=0; i<num; i++){
-    //         lilypads[i].occupied=false;
-    //         lilypads[i].show();
-    //       }
-    //   }
-    //
 }

@@ -103,7 +103,7 @@ function draw() {
   frog.update(); // move frog if attached to something
   frog.checkWet(); // check to see if in water
   frog.show(); // display the frog
-  frog.checkPadsFull(); // check to see if lilypads are full
+  //frog.checkPadsFull(); // check to see if lilypads are full
 }
 
 // The code below is needed to initiate the audio and start the game

@@ -1,8 +1,7 @@
 //monitors arrow key presses to move frog
 
 function keyPressed() {
-      //getAudioContext().resume();
-      //print(getAudioContext().state);
+      
       //if resetting after frog safe on lilypad, pause until song stops 
       if (!safe.isPlaying() && !plunk.isPlaying() && !theme.isPlaying() && started) {
             hop.play();

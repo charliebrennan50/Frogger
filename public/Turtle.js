@@ -13,16 +13,16 @@ class Turtle {
 
     show() {
         this.Timer++; // adjust turtle diving and surfacing with timer
-        if (this.Timer>660) { 
+        if (this.Timer>1200) { 
               this.tAlpha=255;
               this.Timer=int(random(100));
               this.submerged=false;}   //resurfaces
-        else if (this.Timer>540){ 
+        else if (this.Timer>1080){ 
               this.tAlpha=0;
               this.submerged=true;} // completely submerged 
-        else if (this.Timer>360){
+        else if (this.Timer>720){
               this.tAlpha=75;} // goes deeper
-        else if (this.Timer>180){
+        else if (this.Timer>360){
               this.tAlpha=150;} // starts dive
         noStroke();
         fill(5, 35, 120, this.tAlpha);

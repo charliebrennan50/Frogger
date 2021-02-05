@@ -29,6 +29,7 @@ function setup() {
 
   theme.play();
 
+
   //createCanvas(grid * 16, grid * 18);
   let renderer = createCanvas(grid * 16, grid * 14);
   renderer.parent("game-canvas");
@@ -62,7 +63,7 @@ function setup() {
   fill(0, 100, 0);
   noStroke();
   rect(0, height - grid * 14, width, grid); // line above lilypad area
-  rect(0, height - grid * 13, width, grid) //lilypad area
+  rect(0, height - grid * 13, width, grid); //lilypad area
   
   //create lilypad objects and display them
   for (let i = 0; i < 5; i++) {
@@ -109,7 +110,7 @@ function draw() {
 // The code below is needed to initiate the audio and start the game
 
 function mousePressed() {
-  getAudioContext().resume()
+  getAudioContext().resume();
 }
 
 // this function responds to the "start" button click on the game page
